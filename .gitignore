@@ -1,2 +1,6 @@
-node_modules
-bower_components
+# Android Studio project files
+*.iml
+.gradle
+.idea
+build
+import-summary.txt
