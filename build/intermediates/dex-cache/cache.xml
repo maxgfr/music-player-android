@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\maxime\Downloads\Music_Player\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="489bee91b1298f43065551898dc1e32d88a957ab">
+        <dex dex="C:\Users\maxime\Downloads\Music_Player\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_a6953d213c903d388fb63c6109cfe0ef35e0e9ea\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\maxime\.android\build-cache\c53c6de4ddf77e09703ad2bad35bdc2aa7798bc2\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a3e61044038fb54cddf6b8dc79f41d2b57f42caf">
+        <dex dex="C:\Users\maxime\Downloads\Music_Player\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_07575179086ce7ae983445db5108cdc4ded7a9d2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\maxime\.android\build-cache\4b11133bbec9d30e98f94f9ba48f12b50fc1b14a\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fbb206f7a119f66ce171d95aae1225a5b209a8b7">
+        <dex dex="C:\Users\maxime\Downloads\Music_Player\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b3c23db28e5e0cb24d898db9fc5ca875fb7e1f53\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\maxime\Downloads\Music_Player\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="C:\Users\maxime\Downloads\Music_Player\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_f0ac0964d6731ac87366963e3007ec7f9f5e45b5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\maxime\.android\build-cache\a48f38b0df62249ce1f1ad8507a3de0bc19092bf\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9ab787a20aae245b5b3651ae0b9c38459eb37715">
+        <dex dex="C:\Users\maxime\Downloads\Music_Player\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_959321e4f9f23246fed71c39330cf12a18dd18f8\classes.dex" />
+    </item>
+
+</items>
