@@ -8,13 +8,11 @@ public class Album {
     
     private String nom;
     private String artiste;
-    private long id;
 
     public Album() {
     }
 
-    public Album(String title, String artist, long id) {
-        this.id = id;
+    public Album(String title, String artist) {
         nom = title;
         artiste = artist;
     }

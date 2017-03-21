@@ -13,8 +13,10 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.maxgfr.music_player.model.Titre;

@@ -9,21 +9,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.maxgfr.music_player.R;
-import com.maxgfr.music_player.model.Artiste;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by maxime on 16/03/2017.
  */
 
-public class ArtisteAdapter extends ArrayAdapter<Artiste> {
+public class ArtisteAdapter extends ArrayAdapter<String> {
 
     int resource;
     String response;
     Context context;
 
-    public ArtisteAdapter(Context context, int textViewResourceId, List<Artiste> artists) {
+    public ArtisteAdapter(Context context, int textViewResourceId, List<String> artists) {
         super(context, textViewResourceId, artists);
         this.resource = textViewResourceId;
     }
@@ -31,7 +31,7 @@ public class ArtisteAdapter extends ArrayAdapter<Artiste> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout artistListItem;
         // Get current artist object
-        Artiste artist = getItem(position);
+        String artist = getItem(position);
 
         // Inflate the view
         if (convertView == null) {
@@ -48,7 +48,7 @@ public class ArtisteAdapter extends ArrayAdapter<Artiste> {
         TextView artistName = (TextView) artistListItem.findViewById(R.id.contentArtiste);
 
         // Assign the appropriate data from artist object
-        artistName.setText(artist.getTitle());
+        artistName.setText(artist);
 
         return artistListItem;
     }
