@@ -5,6 +5,7 @@ package com.maxgfr.music_player.fragment;
  */
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import android.widget.ListView;
 
 import com.maxgfr.music_player.R;
 import com.maxgfr.music_player.activity.MainActivity;
+import com.maxgfr.music_player.adapter.AlbumAdapter;
+import com.maxgfr.music_player.adapter.TitreAdapter;
 import com.maxgfr.music_player.model.MusicLab;
 import com.maxgfr.music_player.model.Titre;
 import com.maxgfr.music_player.service.MusicService;
@@ -32,11 +35,9 @@ public class PlaceholderFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private MusicLab labo;
+    private static int selection;
     private ListView listeView;
-    private Activity activite;
-    private ArrayList listeCourante;
-    private MusicService service;
+    private MusicLab musicLab;
 
     public PlaceholderFragment() {
     }
@@ -50,11 +51,8 @@ public class PlaceholderFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
+        selection = sectionNumber;
         return fragment;
-    }
-
-    public void setMainActivity(MainActivity activite){
-        this.activite = activite;
     }
 
     @Override
@@ -65,75 +63,29 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
+        View rootView = inflater.inflate(R.layout.fragment_main, container,false);
         this.listeView = (ListView) rootView.findViewById(R.id.content);
+        musicLab = new MusicLab(getContext());
 
-        int numero = this.getArguments().getInt(ARG_SECTION_NUMBER);
 
-        if(numero == 1){
-            replaceListView(labo.getTitres(), onTitre);
-        }
-        else if(numero == 2){
-            replaceListView(labo.getAlbums(), onAlbum);
-        }
-        else if(numero == 3) {
-            replaceListView(labo.getArtists(), onArtiste);
-        }
+        switch (selection) {
+            case 1:
+                //TitreAdapter adapter = new TitreAdapter(getActivity(),musicLab.getTitres());
+                //this.listeView.setAdapter(adapter);
+                break;
 
+            case 2:
+                //AlbumAdapter adapter2 = new AlbumAdapter(getActivity(),musicLab.getAlbums());
+                //this.listeView.setAdapter(adapter2);
+                break;
+
+            case 3:
+                ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_expandable_list_item_1, android.R.id.text1,musicLab.getArtists());
+                this.listeView.setAdapter(adapter3);
+                break;
+        }
         return rootView;
     }
 
-    //Quand on clique sur un morceau, le joue par le biais du service
-    private AdapterView.OnItemClickListener onTitre = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            //service.playSong();
-        }
-    };
-
-    private AdapterView.OnItemClickListener onAlbum = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            String nomAlbum = generateArrayListAlbum().get(position);
-            replaceListView(labo.getAlbumTitres(nomAlbum), onTitre);
-        }
-    };
-
-    private AdapterView.OnItemClickListener onArtiste = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            String monArtiste = generateArrayListAlbum().get(position);
-            replaceListView(labo.getAlbumsFromArtist(monArtiste), onTitre);
-        }
-    };
-
-    private void replaceListView(ArrayList<?> liste, AdapterView.OnItemClickListener event){
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_expandable_list_item_1, android.R.id.text1, liste);
-        this.listeView.setAdapter(adapter);
-        this.listeView.setOnItemClickListener(event);
-
-        this.listeCourante = liste;
-    }
-
-    private ArrayList<String> generateArrayListAlbum(){
-        ArrayList<String> listeAlbums = new ArrayList<String>();
-        for(Titre p : labo.getTitres()){
-            if(!listeAlbums.contains(p.getAlbum())){
-                listeAlbums.add(p.getAlbum());
-            }
-        }
-        return listeAlbums;
-    }
-
-    private ArrayList<String> generateArrayListArtiste(){
-        ArrayList<String> listeAlbums = new ArrayList<String>();
-        for(Titre p : labo.getTitres()){
-            if(!listeAlbums.contains(p.getArtiste())){
-                listeAlbums.add(p.getArtiste());
-            }
-        }
-        return listeAlbums;
-    }
 
 }

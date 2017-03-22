@@ -5,28 +5,16 @@ package com.maxgfr.music_player.service;
  */
 
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
-import android.os.Build;
 import android.os.IBinder;
-import android.os.PowerManager;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
-import com.maxgfr.music_player.R;
-import com.maxgfr.music_player.activity.MainActivity;
-import com.maxgfr.music_player.model.Titre;
-
-import java.util.ArrayList;
+import java.io.IOException;
 
 public class MusicService extends Service {
 
@@ -44,8 +32,19 @@ public class MusicService extends Service {
         return mBinder;
     }
 
-    public void playMedia(MediaPlayer media){
-        media.start();
+    public void playMedia(long id, Context context) {
+        SingletonMediaPlayer mediaPlayer = null;
+        mediaPlayer.getInstance();
+        Uri contentUri = ContentUris.withAppendedId(
+                android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            mediaPlayer.setDataSource(getApplicationContext(), contentUri);
+        }
+        catch (IOException e){
+            e.getMessage();
+        }
+
     }
 
 }
