@@ -1,5 +1,10 @@
 package com.maxgfr.music_player.activity;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,8 +25,30 @@ import android.widget.TextView;
 
 import com.maxgfr.music_player.R;
 import com.maxgfr.music_player.adapter.SectionsPagerAdapter;
+import com.maxgfr.music_player.model.MusicLab;
+import com.maxgfr.music_player.service.MusicService;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    private MusicService servicePlayer = new MusicService();
+    private boolean serviceBounded = false;
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MusicService.LocalBinder binder = (MusicService.LocalBinder) service;
+            servicePlayer = binder.getService();
+            serviceBounded = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            serviceBounded = false;
+        }
+    };
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -55,37 +82,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            return rootView;
-        }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        //INITIALISATION DU SERVICE
+        Intent intent = new Intent(this, MusicService.class);
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 }

@@ -5,7 +5,7 @@ package com.maxgfr.music_player.model;
  */
 
 public class Album {
-    
+
     private String nom;
     private String artiste;
 
