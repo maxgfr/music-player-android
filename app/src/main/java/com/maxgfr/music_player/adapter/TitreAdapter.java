@@ -25,10 +25,10 @@ public class TitreAdapter extends ArrayAdapter<Titre> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater albumInflater = LayoutInflater.from(getContext());
-        View customView = albumInflater.inflate(R.layout.fragment_titre, parent, false);
+        View customView = albumInflater.inflate(android.R.layout.simple_expandable_list_item_1, parent, false);
 
         String name = getItem(position).getTitre();
-        TextView txt = (TextView) customView.findViewById(R.id.titre);
+        TextView txt = (TextView) customView.findViewById(android.R.id.text1);
         txt.setText(name);
 
         return customView;

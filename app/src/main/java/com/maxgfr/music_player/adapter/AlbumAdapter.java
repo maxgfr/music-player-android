@@ -25,10 +25,10 @@ public class AlbumAdapter extends ArrayAdapter<Album> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater albumInflater = LayoutInflater.from(getContext());
-        View customView = albumInflater.inflate(R.layout.fragment_album, parent, false);
+        View customView = albumInflater.inflate(android.R.layout.simple_expandable_list_item_1, parent, false);
 
         String album_name = getItem(position).getTitle();
-        TextView album_text = (TextView) customView.findViewById(R.id.albumView);
+        TextView album_text = (TextView) customView.findViewById(android.R.id.text1);
         album_text.setText(album_name);
 
         return customView;

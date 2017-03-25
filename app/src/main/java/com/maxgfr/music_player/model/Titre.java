@@ -1,11 +1,12 @@
 package com.maxgfr.music_player.model;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 
 /**
  * Created by maxime on 16/03/2017.
  */
 
-public class Titre {
+public class Titre extends MediaPlayer{
 
     private String nomMusique;
     private String nomArtiste;
@@ -41,6 +42,12 @@ public class Titre {
 
     public Bitmap getCover() {
         return cover;
+    }
+
+    public boolean equals(Titre t) {
+        if(nomMusique.equals(t.getTitre()) && nomArtiste.equals(t.getArtiste()))
+            return true;
+        else return false;
     }
 }
 

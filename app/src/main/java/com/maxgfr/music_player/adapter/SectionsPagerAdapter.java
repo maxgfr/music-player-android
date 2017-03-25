@@ -17,15 +17,18 @@ import com.maxgfr.music_player.fragment.PlaceholderFragment;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    public SectionsPagerAdapter(FragmentManager fm) {
+    private MainActivity activite;
+
+    public SectionsPagerAdapter(FragmentManager fm, MainActivity activite) {
         super(fm);
+        this.activite = activite;
     }
 
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        return PlaceholderFragment.newInstance(position + 1,activite);
     }
 
     @Override

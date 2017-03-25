@@ -6,15 +6,21 @@ package com.maxgfr.music_player.model;
 
 public class Album {
 
+    private long id;
     private String nom;
     private String artiste;
 
     public Album() {
     }
 
-    public Album(String title, String artist) {
+    public Album(long id, String title, String artist) {
         nom = title;
+        this.id = id;
         artiste = artist;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getTitle() {

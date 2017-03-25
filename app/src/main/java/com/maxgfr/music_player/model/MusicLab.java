@@ -2,6 +2,7 @@ package com.maxgfr.music_player.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -45,17 +46,48 @@ public class MusicLab {
             int idColumn = musicCursor.getColumnIndex(android.provider.MediaStore.Audio.Media._ID);
             int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
             int albumColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
+            int albumIdColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
 
             do {
                 long thisId = musicCursor.getLong(idColumn);
+                long thisIdAlbum = musicCursor.getLong(albumIdColumn);
                 String thisTitle = musicCursor.getString(titleColumn);
                 String thisAlbum = musicCursor.getString(albumColumn);
                 String thisArtist = musicCursor.getString(artistColumn);
                 mTitres.add(new Titre(thisId, thisTitle, thisArtist, thisAlbum, null));
                 mArtists.add(thisArtist);
-                mAlbums.add(new Album(thisAlbum,thisArtist));
+                mAlbums.add(new Album(thisIdAlbum,thisAlbum,thisArtist));
             } while (musicCursor.moveToNext());
+
+            mTitres = removeDuplicatesTitre(mTitres);
+            mAlbums = removeDuplicatesAlbum(mAlbums);
+
         }
+    }
+
+    private ArrayList<Album> removeDuplicatesAlbum(ArrayList<Album> mAlbums) {
+        ArrayList<Album> result = new ArrayList<Album>();
+        Set<String> titles = new HashSet<String>();
+
+        for( Album item : mAlbums ) {
+            if(titles.add(item.getTitle())) {
+                result.add( item );
+            }
+        }
+        return  result;
+    }
+
+    private ArrayList<Titre> removeDuplicatesTitre(ArrayList<Titre> mTitres) {
+        ArrayList<Titre> result = new ArrayList<Titre>();
+        Set<Integer> titles = new HashSet<Integer>();
+
+        for( Titre item : mTitres ) {
+            if(titles.add((int) item.getId())) {
+                result.add( item );
+            }
+        }
+        return  result;
+
     }
 
     public Titre getTitre(long id) {
@@ -71,6 +103,16 @@ public class MusicLab {
         ArrayList<Titre> list = new ArrayList<Titre>();
         for(Titre s: mTitres) {
             if(s.getArtiste().equals(artist))
+                list.add(s);
+        }
+
+        return list;
+    }
+
+    public ArrayList<Titre> getTitresFromAlbum(String album) {
+        ArrayList<Titre> list = new ArrayList<Titre>();
+        for(Titre s: mTitres) {
+            if(s.getAlbum().equals(album))
                 list.add(s);
         }
 

@@ -6,7 +6,7 @@ import android.media.MediaPlayer;
  * Created by maxime on 22/03/2017.
  */
 
-public final class SingletonMediaPlayer extends MediaPlayer {
+public class SingletonMediaPlayer extends MediaPlayer {
 
     private static volatile SingletonMediaPlayer instance = null;
 
@@ -14,7 +14,7 @@ public final class SingletonMediaPlayer extends MediaPlayer {
         super();
     }
 
-    public final static SingletonMediaPlayer getInstance(){
+    public static SingletonMediaPlayer getInstance(){
         if(SingletonMediaPlayer.instance==null){
             synchronized (SingletonMediaPlayer.class){
                 if(SingletonMediaPlayer.instance==null){
