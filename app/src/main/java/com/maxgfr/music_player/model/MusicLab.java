@@ -47,6 +47,8 @@ public class MusicLab {
             int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
             int albumColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
             int albumIdColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
+            int uriColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.DATA);
+
 
             do {
                 long thisId = musicCursor.getLong(idColumn);
@@ -54,7 +56,8 @@ public class MusicLab {
                 String thisTitle = musicCursor.getString(titleColumn);
                 String thisAlbum = musicCursor.getString(albumColumn);
                 String thisArtist = musicCursor.getString(artistColumn);
-                mTitres.add(new Titre(thisId, thisTitle, thisArtist, thisAlbum, null));
+                String thisUri = musicCursor.getString(uriColumn);
+                mTitres.add(new Titre(thisId, thisTitle, thisArtist, thisAlbum, Uri.parse(thisUri)));
                 mArtists.add(thisArtist);
                 mAlbums.add(new Album(thisIdAlbum,thisAlbum,thisArtist));
             } while (musicCursor.moveToNext());
@@ -63,6 +66,37 @@ public class MusicLab {
             mAlbums = removeDuplicatesAlbum(mAlbums);
 
         }
+    }
+
+    public ArrayList<String> getArtists() {
+        mArtists = (ArrayList<String>) removeDuplicates(mArtists);
+        return mArtists;
+    }
+
+    public ArrayList<Album> getAlbums() {
+        return mAlbums;
+    }
+
+    public ArrayList<Titre> getTitres() {
+        return mTitres;
+    }
+
+    public Titre getTitre(long id) {
+        for (Titre s : mTitres) {
+            if (s.getId() == id)
+                return s;
+        }
+
+        return null;
+    }
+
+    public ArrayList<?> removeDuplicates(ArrayList<?> list) {
+        HashSet hs = new HashSet();
+        hs.addAll(list);
+        list.clear();
+        list.addAll(hs);
+
+        return list;
     }
 
     private ArrayList<Album> removeDuplicatesAlbum(ArrayList<Album> mAlbums) {
@@ -90,15 +124,6 @@ public class MusicLab {
 
     }
 
-    public Titre getTitre(long id) {
-        for (Titre s : mTitres) {
-            if (s.getId() == id)
-                return s;
-        }
-
-        return null;
-    }
-
     public ArrayList<Titre> getTitresFromArtist(String artist) {
         ArrayList<Titre> list = new ArrayList<Titre>();
         for(Titre s: mTitres) {
@@ -123,37 +148,7 @@ public class MusicLab {
         mTitres.add(c);
     }
 
-    public ArrayList<Titre> getTitres() {
-        return mTitres;
-    }
 
-    public ArrayList<?> removeDuplicates(ArrayList<?> list) {
-        HashSet hs = new HashSet();
-        hs.addAll(list);
-        list.clear();
-        list.addAll(hs);
-
-        return list;
-    }
-
-    public ArrayList<String> getArtists() {
-        mArtists = (ArrayList<String>) removeDuplicates(mArtists);
-        return mArtists;
-    }
-
-    public int getAlbumCount(String artist) {
-        int count = 0;
-        for(Album a: mAlbums) {
-            if(a.getFromArtist().equals(artist))
-                count++;
-        }
-
-        return count;
-    }
-
-    public ArrayList<Album> getAlbums() {
-        return mAlbums;
-    }
 
     public ArrayList<Album> getAlbumsFromArtist(String artist) {
         ArrayList<Album> list = new ArrayList<Album>();
@@ -175,13 +170,5 @@ public class MusicLab {
         return list;
     }
 
-    public int getAlbumTitreCount(String album) {
-        int count = 0;
-        for(Titre s: mTitres) {
-            if(s.getAlbum().equals(album))
-                count++;
-        }
-        return count;
-    }
 }
 

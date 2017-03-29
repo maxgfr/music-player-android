@@ -1,6 +1,7 @@
 package com.maxgfr.music_player.model;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
+import android.net.Uri;
 
 /**
  * Created by maxime on 16/03/2017.
@@ -10,18 +11,19 @@ public class Titre extends MediaPlayer{
 
     private String nomMusique;
     private String nomArtiste;
-    private Bitmap cover;
     private String nomAlbum;
     private long idTitre;
+    private Uri uri;
 
-    public Titre() {}
+    public Titre() {super();}
 
-    public Titre(long id, String songTitle, String songArtist, String songAlbum, Bitmap cover) {
+    public Titre(long id, String songTitle, String songArtist, String songAlbum, Uri uri) {
+        super();
         idTitre = id;
         nomMusique = songTitle;
         nomArtiste = songArtist;
         nomAlbum = songAlbum;
-        this.cover = cover;
+        this.uri = uri;
     }
 
     public long getId() {
@@ -36,12 +38,12 @@ public class Titre extends MediaPlayer{
         return nomArtiste;
     }
 
-    public String getAlbum() {
-        return nomAlbum;
+    public Uri getUri() {
+        return uri;
     }
 
-    public Bitmap getCover() {
-        return cover;
+    public String getAlbum() {
+        return nomAlbum;
     }
 
     public boolean equals(Titre t) {

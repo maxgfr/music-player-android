@@ -6,25 +6,22 @@ package com.maxgfr.music_player.service;
 
 
 import android.app.Service;
-import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import com.maxgfr.music_player.model.Titre;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static android.R.attr.id;
-
 public class MusicService extends Service {
 
     private final IBinder mBinder = new LocalBinder();
+    private MediaPlayer mediaPlayer = null;
 
     private ArrayList<Titre> songs;
 
@@ -45,16 +42,34 @@ public class MusicService extends Service {
         songs=theSongs;
     }
 
-    public void playMedia(MediaPlayer mediaPlayer) {
-        /*Uri contentUri = ContentUris.withAppendedId(
-                android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
+    public void playMedia(Titre titre) {
+        if (mediaPlayer != null) {
+            stopMedia();
+        }
+        mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
-            mediaPlayer.setDataSource(getApplicationContext(), contentUri);
+            mediaPlayer.setDataSource(getApplicationContext(), titre.getUri());
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        } catch (SecurityException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        } catch (IllegalStateException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        catch (IOException e){
-            e.getMessage();
-        }*/
-        mediaPlayer.start();
+        try {
+            mediaPlayer.prepare();
+        } catch (IllegalStateException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        }
+       mediaPlayer.start();
+    }
+
+    public void stopMedia() {
+        mediaPlayer.stop();
     }
 }
