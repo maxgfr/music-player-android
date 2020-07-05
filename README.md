@@ -1,2 +1,3 @@
-# Music_Player
-simple music player for android
+# music-player-android
+
+simple music player coding in android
